@@ -1,0 +1,37 @@
+day,session,focus,intensity,minutes,phase,exercise,sets,reps,seconds,rest,load,cue
+Mon,Push and core,"Chest, shoulders, triceps",moderate,48,Warm-up,Treadmill walk,1,,360,0,,Brisk enough to warm up but not enough to tire you.
+Mon,,,,,Main,Push-ups,4,12-15,,60,Bodyweight,"Three seconds down, chest to a fist off the floor."
+Mon,,,,,Main,Dumbbell floor press,4,12,,70,5 kg pair,"Upper arms touch the floor, pause, press."
+Mon,,,,,Main,Overhead press,3,15,,60,5 kg pair,Ribs down. Do not arch the lower back to finish the rep.
+Mon,,,,,Main,Lateral raise,3,15,,45,5 kg pair,"Lead with the elbows, stop at shoulder height, lower for three."
+Mon,,,,,Main,Skull crusher,3,15,,60,EZ bar,Elbows stay pointed at the ceiling the whole set.
+Mon,,,,,Core,Plank,3,,45,30,,"Squeeze the glutes, tuck the pelvis, no sagging hips."
+Mon,,,,,Core,Dead bug,3,12 per side,,30,,Lower back stays glued to the floor. That is the whole exercise.
+Tue,Legs,"Quads, hamstrings, calves",hard,52,Warm-up,Treadmill walk,1,,300,0,,Flat and easy.
+Tue,,,,,Main,Goblet squat,4,15,,75,11 kg,"Three seconds down, one second pause at the bottom."
+Tue,,,,,Main,Bulgarian split squat,3,12 per leg,,60,5 kg pair,Back foot on a chair. This one humbles people with light weights.
+Tue,,,,,Main,Romanian deadlift,4,15,,75,EZ bar,"Push the hips back, bar grazes the thighs."
+Tue,,,,,Main,Walking lunge,3,20 steps,,60,5 kg pair,"Long steps, back knee kisses the floor."
+Tue,,,,,Main,Calf raise,3,25,,45,5 kg pair,On a step if you have one. Pause at the top.
+Tue,,,,,Finisher,Treadmill incline walk,1,,900,0,12% at 5 km/h,No holding the rails. If you need to hold on drop the incline.
+Wed,Conditioning,Cardio and mobility,hard,40,Cardio,Continuous swim,1,,1800,0,Pool,Breathing hard but in control. Not gasping.
+Wed,,,,,Mobility,Cat-cow,1,,120,0,,"Move one vertebra at a time, breathe with it."
+Wed,,,,,Mobility,World's greatest stretch,2,,60,15,,"Lunge, hand inside the front foot, rotate up and open the chest."
+Wed,,,,,Mobility,90/90 hip switch,2,,60,15,,Sit tall and switch sides without using your hands.
+Thu,Pull and core,"Back, rear delts, biceps",moderate,45,Warm-up,Treadmill walk,1,,300,0,,Flat and easy.
+Thu,,,,,Main,Bent-over row,4,15,,75,EZ bar,"Flat back, hinge to 45 degrees, pull to the navel."
+Thu,,,,,Main,Single-arm dumbbell row,4,15 per side,,60,5 kg,"Hand on a chair, pull the elbow past the ribs, lower for three."
+Thu,,,,,Main,Curl,4,12,,60,EZ bar,"Elbows pinned to the sides, no swinging."
+Thu,,,,,Main,Reverse fly,3,15,,45,5 kg pair,"Hinge forward, arms wide, pinch the shoulder blades."
+Thu,,,,,Core,Hollow hold,3,,30,30,,Lower back pressed down. Bend the knees if it lifts.
+Thu,,,,,Core,Bicycle crunch,3,20 per side,,30,,Slow. Rotate the whole torso and not just the elbow.
+Fri,Full-body circuit,Highest burn of the week,very hard,40,Warm-up,Treadmill walk,1,,240,0,,Get warm. You are about to work.
+Fri,,,,,Circuit,Squat to overhead press,4,,40,20,5 kg pair,Squat down then stand and press in one motion.
+Fri,,,,,Circuit,Push-ups,4,,40,20,Bodyweight,Drop to the knees rather than stopping.
+Fri,,,,,Circuit,Bent-over row,4,,40,20,EZ bar,Keep the back flat even as you tire.
+Fri,,,,,Circuit,Alternating reverse lunge,4,,40,20,5 kg pair,Step back and not forward. Easier on the knees.
+Fri,,,,,Circuit,Mountain climbers,4,,40,20,,Hips low and knees driving to the chest.
+Fri,,,,,Cool-down,Treadmill easy walk,1,,480,0,,Let the heart rate come down before you sit.
+Sat,Easy cardio,Steady state and a stretch,light,35,Cardio,Brisk walk outside,1,,1800,0,,Fast enough that talking takes effort.
+Sat,,,,,Mobility,Hamstring and hip flexor stretch,2,,60,15,,Hold and do not bounce. Sitting all day shortens both of these.
+Sat,,,,,Mobility,Doorway chest stretch,2,,45,15,,Forearm on the frame then step through until you feel the pec open.
