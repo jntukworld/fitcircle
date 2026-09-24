@@ -261,33 +261,32 @@ function listMembers() {
   var byMember = {};
   readRows('entries').forEach(function (r) {
     var id = String(r[0]);
-    if (!byMember[id]) byMember[id] = { dates: [], weights: [], burned: 0 };
+    if (!byMember[id]) byMember[id] = { dates: [] };
     var d = isoDate(r[2]);
     if (d) byMember[id].dates.push(d);
-    var w = num(r[3]);
-    if (w != null) byMember[id].weights.push({ d: d, w: w });
-    byMember[id].burned += num(r[4]) || 0;
   });
 
+  // Deliberately absent: weight, goal weight and waist. The organiser sees who
+  // is turning up, not what anyone weighs.
   var members = readRows('members').map(function (r) {
     var id = String(r[0]);
-    var agg = byMember[id] || { dates: [], weights: [], burned: 0 };
-    agg.weights.sort(function (a, b) { return a.d < b.d ? -1 : 1; });
-    var recent = agg.weights.slice(-7);
-    var trend = recent.length
-      ? recent.reduce(function (s, x) { return s + x.w; }, 0) / recent.length
-      : null;
+    var agg = byMember[id] || { dates: [] };
     agg.dates.sort();
+    var trained = 0;
+    try {
+      var ses = JSON.parse(r[14] || '{}');
+      Object.keys(ses).forEach(function (d) {
+        if (Object.keys((ses[d] && ses[d].done) || {}).length >= 3) trained++;
+      });
+    } catch (e) { trained = 0; }
     return {
       id: id,
       name: String(r[2] || ''),
       email: String(r[1] || ''),
-      startWeight: num(r[6]),
-      goalWeight: num(r[7]),
-      currentWeight: trend == null ? null : Math.round(trend * 100) / 100,
       daysLogged: agg.dates.length,
+      sessionsTrained: trained,
       lastLog: agg.dates.length ? agg.dates[agg.dates.length - 1] : null,
-      bankedKcal: Math.round(agg.burned),
+      planSource: String(r[13] || ''),
       updatedAt: String(r[15] || ''),
     };
   });

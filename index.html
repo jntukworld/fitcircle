@@ -133,7 +133,138 @@ input:focus-visible,select:focus-visible,.tabs button:focus-visible{outline:2px 
 .ex h4{font-size:17px; font-weight:600}
 .exmeta{color:var(--amber); font-size:13.5px; margin-top:4px; font-variant-numeric:tabular-nums}
 .excue{color:var(--slate); font-size:13.5px; margin-top:6px; max-width:60ch}
-.sets{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; max-width:230px; flex:0 0 auto}
+/* ---- light theme: follows the device unless Setup overrides it ---- */
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --ink:#F7F5F0; --raise:#FFFFFF; --line:#DCD6CB; --bone:#191E25;
+    --slate:#616B78; --amber:#9A6712; --teal:#16705C; --deep:#ECE7DE;
+  }
+}
+:root[data-theme="light"]{
+  --ink:#F7F5F0; --raise:#FFFFFF; --line:#DCD6CB; --bone:#191E25;
+  --slate:#616B78; --amber:#9A6712; --teal:#16705C; --deep:#ECE7DE;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]) .eta,
+  :root:not([data-theme="dark"]) .sessnote,
+  :root:not([data-theme="dark"]) .pcue{color:#39424E}
+  :root:not([data-theme="dark"]) footer,
+  :root:not([data-theme="dark"]) .gate-note{color:#6B7683}
+  :root:not([data-theme="dark"]) .setbtn.done,
+  :root:not([data-theme="dark"]) .pdot.on,
+  :root:not([data-theme="dark"]) .checks button.on{background:#DFF0EA}
+  :root:not([data-theme="dark"]) .lightbox{background:rgba(247,245,240,.94)}
+  :root:not([data-theme="dark"]) .pgo{color:#FFF}
+  :root:not([data-theme="dark"]) .primary,
+  :root:not([data-theme="dark"]) .btn{color:#FFF}
+}
+:root[data-theme="light"] .eta,
+:root[data-theme="light"] .sessnote,
+:root[data-theme="light"] .pcue{color:#39424E}
+:root[data-theme="light"] footer,
+:root[data-theme="light"] .gate-note{color:#6B7683}
+:root[data-theme="light"] .setbtn.done,
+:root[data-theme="light"] .pdot.on,
+:root[data-theme="light"] .checks button.on{background:#DFF0EA}
+:root[data-theme="light"] .lightbox{background:rgba(247,245,240,.94)}
+:root[data-theme="light"] .btn,
+:root[data-theme="light"] .pgo{color:#FFF}
+
+/* ---- load logging ---- */
+.plog{border:1px solid var(--line); border-radius:12px; padding:14px; background:var(--deep)}
+.plogrow{display:flex; align-items:flex-end; gap:10px; flex-wrap:wrap}
+.plogrow label{display:flex; flex-direction:column; gap:5px}
+.plogrow span{color:var(--slate); font-size:12px}
+.plogin{width:96px; min-height:50px; padding:10px 12px; border-radius:9px; font:inherit; font-size:18px;
+  font-variant-numeric:tabular-nums; background:var(--raise); border:1px solid var(--line); color:var(--bone)}
+.plogx{color:var(--slate); font-size:18px; padding-bottom:13px}
+.plogset{color:var(--slate); font-size:12.5px; padding-bottom:15px; margin-left:auto}
+.plast{color:var(--slate); font-size:13px; margin-top:10px; line-height:1.45}
+.plast strong{color:var(--amber); font-weight:600}
+
+.adh{margin-top:16px; color:var(--slate); font-size:13px; max-width:62ch}
+.adhbar{display:block; height:5px; background:var(--deep); border-radius:3px; overflow:hidden; margin-bottom:9px}
+.adhbar>span{display:block; height:100%; background:var(--teal); border-radius:3px}
+
+.deloadtag{display:inline-block; margin-left:8px; padding:2px 9px; border-radius:20px; font-size:11.5px;
+  border:1px solid var(--teal); color:var(--teal)}
+
+.sronly{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+.sets{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; max-width:264px; flex:0 0 auto}
+
+/* ---------- session player ---------- */
+.player{position:fixed; inset:0; z-index:50; background:var(--ink); display:flex; flex-direction:column;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  overscroll-behavior:contain}
+.pbar{display:flex; align-items:center; gap:14px; padding:12px 16px; flex:0 0 auto}
+.picon{background:transparent; border:1px solid var(--line); color:var(--slate); width:40px; height:40px;
+  border-radius:10px; font-size:15px; line-height:1; flex:0 0 auto}
+.picon:hover{color:var(--bone); border-color:#34404E}
+.pprog{flex:1 1 auto; height:4px; background:var(--deep); border-radius:2px; overflow:hidden}
+.pprogfill{height:100%; background:var(--teal); border-radius:2px; transition:width .35s ease}
+.pcount{font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; flex:0 0 auto}
+.pcount i{font-style:normal; color:var(--slate); font-weight:400; font-size:12px}
+
+.pstage{flex:1 1 auto; min-height:0; display:flex; align-items:center; justify-content:center; padding:4px 16px 0}
+.pshot{position:relative; margin:0; width:100%; height:100%; border-radius:14px; overflow:hidden;
+  background:var(--deep); border:1px solid var(--line)}
+.pshot img{position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:var(--deep)}
+.pshot img.b{opacity:0}
+@media (prefers-reduced-motion:no-preference){ .pshot img.b{animation:exflip 2.8s ease-in-out infinite} }
+.pshot figcaption{position:absolute; left:0; right:0; bottom:0; padding:8px; text-align:center;
+  font-size:11.5px; color:var(--slate); background:linear-gradient(transparent,rgba(13,17,22,.85))}
+.pstage.noimg .pshot{display:none}
+.pglyph{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center;
+  width:100%; height:100%; border:1px solid var(--line); border-radius:14px; background:var(--deep); padding:24px}
+.pglyph span{color:var(--amber); font-size:12.5px}
+.pglyph strong{font-size:clamp(22px,5vw,38px); font-weight:800; letter-spacing:-0.03em; line-height:1.05}
+
+.ppanel{flex:0 0 auto; padding:18px 16px 20px; display:flex; flex-direction:column; gap:10px}
+.pphase{color:var(--slate); font-size:12.5px}
+.pname{font-size:clamp(21px,5.2vw,30px); font-weight:800; letter-spacing:-0.03em; line-height:1.1}
+.pmeta{color:var(--amber); font-size:15px; font-variant-numeric:tabular-nums}
+.pcue{color:#B9C2CC; font-size:14.5px; max-width:60ch}
+
+.pdots{display:flex; gap:9px; flex-wrap:wrap}
+.pdot{width:46px; height:46px; border-radius:12px; background:var(--raise); border:1px solid var(--line);
+  color:var(--slate); font-size:14px; font-variant-numeric:tabular-nums}
+.pdot.on{background:#16332D; border-color:var(--teal); color:var(--teal); font-size:18px}
+.pdot.live{border-color:var(--amber); color:var(--amber)}
+
+.ptimer{margin-top:4px}
+.plabel{font-size:12.5px; color:var(--slate)}
+.ptimer.work .plabel{color:var(--amber)}
+.ptimer.rest .plabel{color:var(--teal)}
+.ptime{font-size:clamp(52px,15vw,84px); font-weight:800; letter-spacing:-0.045em; line-height:.92;
+  font-variant-numeric:tabular-nums}
+.ptrack{height:5px; background:var(--deep); border-radius:3px; overflow:hidden; margin-top:8px}
+.ptrackfill{height:100%; background:var(--amber)}
+.ptimer.rest .ptrackfill{background:var(--teal)}
+
+.pactions{display:flex; gap:10px; align-items:stretch; margin-top:6px}
+.pnav{flex:0 0 58px; background:transparent; border:1px solid var(--line); color:var(--slate);
+  border-radius:12px; font-size:24px; line-height:1; min-height:62px}
+.pnav:disabled{opacity:.3}
+.pnav:not(:disabled):hover{color:var(--bone); border-color:#34404E}
+.pgo{flex:1 1 auto; min-height:62px; border:none; border-radius:12px; font-weight:700;
+  font-size:17px; background:var(--amber); color:#14181E}
+.pgo.quiet{background:transparent; border:1px solid #34404E; color:var(--bone)}
+.pgo.done{background:var(--teal); color:#0C1F1B}
+.pnext{color:var(--slate); font-size:13px}
+
+/* tablet and desktop, and any phone turned sideways: picture beside the controls */
+@media (min-width:720px), (orientation:landscape) and (min-height:320px){
+  .player{display:grid; grid-template-columns:1fr minmax(320px,440px); grid-template-rows:auto 1fr;
+    column-gap:24px; padding-left:18px; padding-right:18px}
+  .pbar{grid-column:1/-1}
+  .pstage{padding:0 0 18px}
+  .ppanel{padding:0 0 18px; justify-content:center; overflow-y:auto}
+}
+@media (min-width:1100px){
+  .player{grid-template-columns:1fr 460px; padding-left:40px; padding-right:40px}
+  .ppanel{gap:13px}
+}
 .setbtn{min-width:52px; min-height:48px; padding:0 10px; border-radius:8px; background:var(--raise);
   border:1px solid var(--line); color:var(--slate); font-size:14px; font-variant-numeric:tabular-nums}
 .setbtn.done{background:#16332D; border-color:var(--teal); color:var(--teal); font-size:18px}
@@ -217,20 +348,81 @@ td{padding:9px 10px 9px 0; border-bottom:1px solid #1C232C}
 footer{color:#5D6875; font-size:12.5px; padding-top:22px; max-width:76ch}
 .hidden{display:none !important}
 
-@media (max-width:620px){
-  .wrap{padding:20px 15px 60px}
+/* ================================================================
+   RESPONSIVE SCALE
+   Type sizes flex continuously with clamp(); the breakpoints below
+   only change what the layout actually needs to change.
+   ================================================================ */
+
+.route b{font-size:clamp(26px,6.5vw,34px)}
+.big{font-size:clamp(42px,11vw,62px)}
+.sessname{font-size:clamp(22px,5.5vw,30px)}
+.timernum{font-size:clamp(34px,9vw,46px)}
+
+/* ---- phones ---- */
+@media (max-width:700px){
+  .wrap{padding:20px 15px 64px}
+  .top{gap:14px}
+  .tabs{width:100%}
+  .tabs button{flex:1 1 0; padding:9px 6px; text-align:center}
+
+  /* exercise rows become a small grid so the set buttons stop wrapping raggedly */
+  .ex{display:grid; grid-template-columns:auto 1fr; grid-template-areas:"shot main" "sets sets";
+    gap:12px 14px; align-items:start}
+  .exshot{grid-area:shot; width:84px; height:64px}
+  .exmain{grid-area:main; min-width:0}
+  .sets{grid-area:sets; max-width:none; display:grid; gap:8px;
+    grid-template-columns:repeat(auto-fill,minmax(60px,1fr))}
+  .setbtn{width:100%}
+
+  .timerbar{grid-template-columns:1fr auto}
+  .timeract{grid-column:1/-1}
+  .blockhead{align-items:flex-start}
+}
+
+/* the fat gauge and its readout only fit side by side above this */
+@media (max-width:780px){
   .hero{flex-direction:column; align-items:center; gap:22px}
   .readout{width:100%}
-  .big{font-size:50px}
-  .sessname{font-size:25px}
-  .ex{flex-direction:row; flex-wrap:wrap; gap:12px}
-  .exmain{flex:1 1 60%; min-width:0}
-  .exshot{width:78px; height:60px}
-  .sets{max-width:none; justify-content:flex-start}
-  .timerbar{grid-template-columns:1fr auto}
-  .timernum{font-size:36px}
-  .timeract{grid-column:1/-1}
 }
+
+/* ---- small phones ---- */
+@media (max-width:430px){
+  .wrap{padding:18px 13px 64px}
+  .fields{grid-template-columns:1fr 1fr}
+  .fields label.wide,
+  .fields label:first-child{grid-column:1/-1}
+  .facts{grid-template-columns:1fr 1fr; gap:16px}
+  .exshot{width:72px; height:56px}
+}
+
+/* the seven weekday chips always sit on one row, whatever the phone */
+.daypick.week7{display:grid; grid-template-columns:repeat(7,1fr); gap:6px}
+.daypick.week7 .chip{padding:9px 4px; text-align:center; font-size:13.5px}
+@media (min-width:560px){ .daypick.week7{gap:8px} .daypick.week7 .chip{font-size:14px} }
+
+/* ---- tablets ---- */
+@media (min-width:701px) and (max-width:1023px){
+  .wrap{padding:28px 26px 72px}
+  .fields{grid-template-columns:repeat(3,1fr)}
+  .charts{grid-template-columns:1fr; gap:26px}
+}
+
+/* ---- desktop ---- */
+@media (min-width:1024px){
+  .wrap{max-width:1040px; padding:34px 34px 80px}
+  .fields{grid-template-columns:repeat(4,1fr)}
+  .fields label.wide{grid-column:1/-1}
+  .ex{gap:22px}
+  .exshot{width:112px; height:84px}
+  .sessnote,.eta,.hint,.caption{max-width:66ch}
+}
+
+@media (min-width:1440px){
+  .wrap{max-width:1180px}
+  .exshot{width:128px; height:96px}
+}
+
 @media (prefers-reduced-motion:no-preference){
   .barfill,.ring .fg{transition:all .4s ease}
 }
@@ -241,11 +433,15 @@ footer{color:#5D6875; font-size:12.5px; padding-top:22px; max-width:76ch}
 <div id="gate">
   <div class="gate-mark">FitCircle</div>
   <p class="gate-sub">Your training week and your fat-loss ledger, in one place. Members only.</p>
-  <div style="margin-top:28px"><button class="btn" id="signin">Sign in</button></div>
-  <p class="gate-note">If you were invited by email, use the link in that invitation to set your password the first time.</p>
+  <div style="margin-top:28px; display:flex; gap:10px; flex-wrap:wrap">
+    <button class="btn" id="signin">Sign in</button>
+    <button class="ghost" id="forgot">Forgot your password?</button>
+  </div>
+  <p class="gate-note">If you were invited by email, use the link in that invitation to set your password the first time. Forgotten it? Use the link above — you'll get a reset email.</p>
 </div>
 
 <div id="root" class="wrap hidden"></div>
+<div id="announce" class="sronly" role="status" aria-live="polite"></div>
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
@@ -463,6 +659,217 @@ function shotHtml(name){
   </button>`;
 }
 
+/* ================================================================
+   SESSION PLAYER — full screen, one exercise at a time
+   ================================================================ */
+let player=null;      // {ex:index} while the player is open
+let wakeLock=null;
+
+async function keepAwake(on){
+  try{
+    if(on && 'wakeLock' in navigator && !wakeLock){
+      wakeLock=await navigator.wakeLock.request('screen');
+      wakeLock.addEventListener('release',()=>{wakeLock=null;});
+    }else if(!on && wakeLock){ await wakeLock.release(); wakeLock=null; }
+  }catch(e){ /* unsupported or refused — the player still works */ }
+}
+document.addEventListener('visibilitychange',()=>{
+  if(player && document.visibilityState==='visible') keepAwake(true);
+});
+
+/* Whichever view is up gets redrawn. */
+function refresh(){ if(player) renderPlayer(); else render(); }
+
+function openPlayer(exIdx){
+  player={ex:exIdx||0};
+  keepAwake(true);
+  renderPlayer();
+}
+function closePlayer(){
+  player=null; keepAwake(false);
+  const el=document.getElementById('player'); if(el) el.remove();
+  render();
+}
+
+function firstUnfinished(ses, done){
+  for(let i=0;i<ses.exercises.length;i++){
+    for(let s=0;s<ses.exercises[i].sets;s++) if(!done[`${i}-${s}`]) return i;
+  }
+  return 0;
+}
+function nextSetIndex(ex, exIdx, done){
+  for(let s=0;s<ex.sets;s++) if(!done[`${exIdx}-${s}`]) return s;
+  return ex.sets;
+}
+
+function renderPlayer(){
+  const p=S.profile, ses=buildSession(p, viewDay), iso=todayISO();
+  const done=(S.sessions[iso]?.done)||{};
+  const i=Math.max(0, Math.min(player.ex, ses.exercises.length-1));
+  player.ex=i;
+  const ex=ses.exercises[i];
+  const totN=totalSets(ses), doneN=Object.keys(done).length;
+  const nextSet=nextSetIndex(ex, i, done);
+  const exDone=nextSet>=ex.sets;
+  const folder=exerciseShot(ex.name);
+  const enc=folder?encodeURIComponent(folder):'';
+  const running=timer && timer.ex===i;
+  const upcoming=ses.exercises[i+1];
+
+  let action;
+  if(running) action={label:timer.mode==='work'?'Skip ahead':'Skip rest', act:'timer-skip', tone:'quiet'};
+  else if(exDone) action={label: upcoming?'Next exercise':'Finish session',
+                          act: upcoming?'player-next':'player-done', tone:'done'};
+  else action={label: ex.work?`Start ${clock(ex.work)}`:`Set ${nextSet+1} done`, act:'player-go', tone:'go'};
+
+  let host=document.getElementById('player');
+  if(!host){ host=document.createElement('div'); host.id='player'; host.className='player'; document.body.appendChild(host); }
+
+  host.innerHTML=`
+  <header class="pbar">
+    <button class="picon" data-act="player-close" aria-label="Close">✕</button>
+    <div class="pprog"><div class="pprogfill" style="width:${totN?doneN/totN*100:0}%"></div></div>
+    <span class="pcount">${doneN}<i>/${totN}</i></span>
+  </header>
+
+  <div class="pstage">
+    ${folder?`<figure class="pshot">
+      <img src="${IMG_CDN}${enc}/0.jpg" alt="${esc(ex.name)}, start position" onerror="this.closest('.pstage').classList.add('noimg')">
+      <img class="b" src="${IMG_CDN}${enc}/1.jpg" alt="${esc(ex.name)}, end position">
+      <figcaption>start &nbsp;·&nbsp; end</figcaption>
+    </figure>`:`<div class="pglyph"><span>${esc(ex.phase)}</span><strong>${esc(ex.name)}</strong></div>`}
+  </div>
+
+  <div class="ppanel">
+    <p class="pphase">${esc(ex.phase)} · ${i+1} of ${ses.exercises.length}</p>
+    <h2 class="pname">${esc(ex.name)}</h2>
+    <p class="pmeta">${esc(ex.detail)}${ex.rest?` · ${ex.rest}s rest`:''}</p>
+
+    <div class="pdots">
+      ${Array.from({length:ex.sets}).map((_,s)=>{
+        const d=!!done[`${i}-${s}`];
+        const now=running && timer.set===s;
+        return `<button class="pdot ${d?'on':''} ${now?'live':''}" data-act="player-set" data-set="${s}" aria-label="Set ${s+1}">${d?'✓':s+1}</button>`;
+      }).join('')}
+    </div>
+
+    ${ex.cue?`<p class="pcue">${esc(ex.cue)}</p>`:''}
+
+    ${ex.work?'':(()=>{
+      const rows=sessionLog(iso)[ex.name]||[];
+      const s=Math.min(nextSet, ex.sets-1);
+      const cur=rows[s]||{};
+      const hint=progressionHint(ex.name, iso);
+      return `<div class="plog">
+        <div class="plogrow">
+          <label><span>kg</span><input type="number" step="0.5" inputmode="decimal" class="plogin"
+            data-log="w" data-name="${esc(ex.name)}" data-set="${s}" value="${cur.w??''}" placeholder="—"></label>
+          <span class="plogx">×</span>
+          <label><span>reps</span><input type="number" inputmode="numeric" class="plogin"
+            data-log="r" data-name="${esc(ex.name)}" data-set="${s}" value="${cur.r??''}" placeholder="—"></label>
+          <span class="plogset">set ${s+1}</span>
+        </div>
+        ${hint
+          ? `<p class="plast">Last time, ${esc(hint.when)} &nbsp;·&nbsp; best set <strong>${esc(hint.best)}</strong> &nbsp;·&nbsp; ${hint.totalReps} reps total. Beat one of those.</p>`
+          : `<p class="plast">First time logging this. Whatever you do today becomes the number to beat.</p>`}
+      </div>`;
+    })()}
+
+    ${running?`<div class="ptimer ${timer.mode}">
+      <span class="plabel">${timer.mode==='work'?'Work':'Rest'}</span>
+      <div class="ptime" id="ptimernum" role="timer">${clock((timer.endsAt-Date.now())/1000)}</div>
+      <div class="ptrack"><div class="ptrackfill" id="ptimerfill" style="width:100%"></div></div>
+    </div>`:''}
+
+    <div class="pactions">
+      <button class="pnav" data-act="player-prev" ${i===0?'disabled':''} aria-label="Previous">‹</button>
+      <button class="pgo ${action.tone}" data-act="${action.act}">${action.label}</button>
+      <button class="pnav" data-act="player-next" ${!upcoming?'disabled':''} aria-label="Next">›</button>
+    </div>
+
+    <p class="pnext">${upcoming?`Next &nbsp;·&nbsp; ${esc(upcoming.name)}`:'Last exercise of the session'}</p>
+  </div>`;
+}
+
+/* ================================================================
+   LOAD LOGGING, PROGRESSION, ADHERENCE
+   Logs are keyed by exercise NAME, not position, so they survive a
+   plan change. sessions[date].log = { "Barbell row": [{w,r},...] }
+   ================================================================ */
+function sessionLog(iso){ return (S.sessions[iso] && S.sessions[iso].log) || {}; }
+
+function recordSet(iso, name, setIdx, patch){
+  const cur=S.sessions[iso] || {done:{}};
+  if(!cur.log) cur.log={};
+  if(!cur.log[name]) cur.log[name]=[];
+  const row=cur.log[name][setIdx] || {};
+  if(patch.w!==undefined) row.w = patch.w===''?null:Number(patch.w);
+  if(patch.r!==undefined) row.r = patch.r===''?null:Number(patch.r);
+  if(row.w==null && row.r==null) cur.log[name][setIdx]=null; else cur.log[name][setIdx]=row;
+  S.sessions[iso]=cur;
+  queueSave();
+}
+
+/** The most recent day before `iso` on which this exercise was actually logged. */
+function lastPerformance(name, iso){
+  const dates=Object.keys(S.sessions).filter(d=>d<iso).sort().reverse();
+  for(const d of dates){
+    const rows=(S.sessions[d].log||{})[name];
+    if(rows && rows.some(x=>x && (x.r||x.w))) return {date:d, sets:rows.filter(Boolean)};
+  }
+  return null;
+}
+
+const setVolume = s => (Number(s.w)||0)*(Number(s.r)||0);
+function topSet(sets){
+  let best=null;
+  for(const s of sets){ if(!s) continue; if(!best || setVolume(s)>setVolume(best) || (!best.w&&(s.r||0)>(best.r||0))) best=s; }
+  return best;
+}
+const describeSet = s => s ? (s.w ? `${s.w} kg × ${s.r||'?'}` : `${s.r||'?'} reps`) : '';
+
+/** What to beat today, in the member's own numbers. */
+function progressionHint(name, iso){
+  const last=lastPerformance(name, iso);
+  if(!last) return null;
+  const best=topSet(last.sets);
+  if(!best) return null;
+  const totalReps=last.sets.reduce((a,s)=>a+(Number(s.r)||0),0);
+  return {when:shortDate(last.date), best:describeSet(best), totalReps,
+          sets:last.sets.length};
+}
+
+/** Sessions actually trained vs training days that have gone by. */
+function adherence(){
+  const p=S.profile||{};
+  const dates=Object.keys(S.sessions).sort();
+  if(!dates.length) return null;
+  const trained=dates.filter(d=>Object.keys(S.sessions[d].done||{}).length>=3);
+  const start=p.startedOn || dates[0];
+  let planned=0;
+  const cur=parseISO(start), end=parseISO(todayISO());
+  let guard=0;
+  while(cur<=end && guard++<800){
+    if(!isRestDay(p, cur.getDay())) planned++;
+    cur.setDate(cur.getDate()+1);
+  }
+  return {trained:trained.length, planned:Math.max(planned,trained.length),
+          pct: planned? Math.min(100, Math.round(trained.length/planned*100)) : 0,
+          lastTrained: trained.length? trained[trained.length-1] : null};
+}
+
+/** Week number since the member started, 1-based. */
+function programmeWeek(p){
+  const start=(p && p.startedOn) || todayISO();
+  return Math.floor(Math.max(0, daysBetween(start, todayISO()))/7) + 1;
+}
+/** Every fourth week, cut the volume. Opt out in Setup. */
+function isDeloadWeek(p){
+  if(!p || p.deload===false) return false;
+  if(p.customPlan) return false;           // an uploaded plan sets its own volume
+  return programmeWeek(p) % 4 === 0;
+}
+
 /* ---------------- plan generation ---------------- */
 function kitOf(profile){ return ['bodyweight',...(profile.equipment||[])]; }
 
@@ -493,17 +900,27 @@ function generateSession(profile, weekday, forceKey){
   const kit = kitOf(profile);
   const used = new Set();
   const exercises = [];
+  const deload = isDeloadWeek(profile) && key!=='rest' && key!=='cond';
   tpl.slots.forEach((slot,i)=>{
     const ex = pickExercise(slot.p, kit, weekday*7+i, used);
     if(!ex) return;
     used.add(ex.n);
+    let sets = slot.sets ?? ex.sets;
+    // A deload trims the working sets. Warm-ups, finishers and mobility stay put.
+    if(deload && (slot.ph==='Main'||slot.ph==='Circuit'||slot.ph==='Core')){
+      sets = Math.max(2, Math.round(sets*0.6));
+    }
     exercises.push({
       name:ex.n, phase:slot.ph||'Main', cue:ex.c,
-      detail:slot.work?`${slot.sets} × ${slot.work} sec`:ex.d,
-      sets:slot.sets??ex.sets, work:slot.work??ex.work, rest:slot.rest??ex.rest,
+      detail:slot.work?`${sets} × ${slot.work} sec`:ex.d.replace(/^\d+/, sets),
+      sets, work:slot.work??ex.work, rest:slot.rest??ex.rest,
     });
   });
-  return {key, name:tpl.name, focus:tpl.focus, note:tpl.note, met:tpl.met, minutes:tpl.minutes, exercises};
+  const note = deload
+    ? 'Deload week — volume is cut on purpose. Keep the weight, drop the sets. This is how you come back stronger rather than just more tired.'
+    : tpl.note;
+  return {key, name:tpl.name, focus:tpl.focus, note, met:tpl.met,
+          minutes: deload?Math.round(tpl.minutes*0.75):tpl.minutes, exercises, deload};
 }
 
 /* Which week of an alternating plan are we in? Plans without a week column
@@ -748,7 +1165,7 @@ function model(){
     const burn=e.burn||0;
     const deficit = (p.mode==='full' && e.intake!=null) ? maint+burn-e.intake : burn;
     cum+=deficit;
-    rows.push({date:d,label:shortDate(d),weight:e.weight,burn,intake:e.intake,deficit,cum});
+    rows.push({date:d,label:shortDate(d),weight:e.weight,waist:e.waist??null,burn,intake:e.intake,deficit,cum});
   }
   const weighed=rows.filter(r=>r.weight!=null);
   weighed.forEach((r,i)=>{const win=weighed.slice(Math.max(0,i-6),i+1);
@@ -770,8 +1187,12 @@ function model(){
   const todayDef = tr ? ((p.mode==='full'&&tr.intake!=null)
     ? (+p.maintenance||2400)*((tr.weight??lastW)/(+p.startWeight||75))+(tr.burn||0)-tr.intake
     : (tr.burn||0)) : 0;
+  const waists=rows.filter(r=>r.waist!=null);
+  const waist=waists.length?waists[waists.length-1].waist:null;
+  const waistChange=waists.length>1?waist-waists[0].waist:null;
+
   return {rows,targetKcal,cum,pct,ledgerKg:cum/7700,
-    scaleKg:trend!=null?(+p.startWeight||75)-trend:null,current,
+    scaleKg:trend!=null?(+p.startWeight||75)-trend:null,current,waist,waistChange,
     remaining,pace,calDays,logged:dates.length,eta,etaDays,todayDef};
 }
 
@@ -822,8 +1243,14 @@ function svgChart(rows, kind, goal, dailyTarget){
    ================================================================ */
 let timer=null, tickHandle=null;
 
+function announce(msg){
+  const el=document.getElementById('announce');
+  if(el) el.textContent=msg;
+}
+
 function startTimer(t){
   timer=t; renderTimer();
+  announce(t.mode==='work'?`Work, ${Math.round(t.total)} seconds`:`Rest, ${Math.round(t.total)} seconds`);
   clearInterval(tickHandle);
   tickHandle=setInterval(()=>{
     if(!timer){clearInterval(tickHandle);return;}
@@ -831,7 +1258,7 @@ function startTimer(t){
     else updateTimerFace();
   },200);
 }
-function stopTimer(){ timer=null; clearInterval(tickHandle); renderWorkout(); }
+function stopTimer(){ timer=null; clearInterval(tickHandle); refresh(); }
 
 function finishTimer(){
   const t=timer; if(!t) return;
@@ -842,18 +1269,24 @@ function finishTimer(){
     beep(2,940);
     if(ex && ex.rest>0 && t.set<ex.sets-1){
       startTimer({ex:t.ex,set:t.set,mode:'rest',endsAt:Date.now()+ex.rest*1000,total:ex.rest});
-      renderWorkout(); return;
+      refresh(); return;
     }
-  }else{ beep(3,620); }
-  timer=null; renderWorkout();
+  }else{ beep(3,620); announce('Rest over. Next set.'); }
+  timer=null;
+  // in the player, rolling off the last set moves you on rather than stranding you
+  if(player && ex){
+    const done=(S.sessions[todayISO()]?.done)||{};
+    if(nextSetIndex(ex, t.ex, done)>=ex.sets && ses.exercises[t.ex+1]) player.ex=t.ex+1;
+  }
+  refresh();
 }
 
 function updateTimerFace(){
-  const num=document.getElementById('timernum'), fill=document.getElementById('timerfill');
-  if(!timer||!num) return;
+  if(!timer) return;
   const left=(timer.endsAt-Date.now())/1000;
-  num.textContent=clock(left);
-  if(fill) fill.style.width=Math.max(0,Math.min(100,left/timer.total*100))+'%';
+  const pct=Math.max(0,Math.min(100,left/timer.total*100));
+  ['timernum','ptimernum'].forEach(id=>{const n=document.getElementById(id); if(n) n.textContent=clock(left);});
+  ['timerfill','ptimerfill'].forEach(id=>{const f=document.getElementById(id); if(f) f.style.width=pct+'%';});
 }
 
 function renderTimer(){
@@ -885,7 +1318,7 @@ function markSet(exIdx,setIdx,value,silent){
   if(value) cur.done[key]=true; else delete cur.done[key];
   S.sessions[iso]=cur;
   queueSave();
-  if(!silent) renderWorkout();
+  if(!silent) refresh();
 }
 
 /* ================================================================
@@ -913,7 +1346,7 @@ function renderWorkout(){
   const C=2*Math.PI*34;
 
   return `
-  <div class="daypick">
+  <div class="daypick week7">
     ${DAYNAMES.map((d,i)=>{
       const rest=isRestDay(p,i);
       return `<button class="chip ${i===viewDay?'on':''} ${i===realToday?'today':''} ${rest?'rest':''}" data-act="day" data-i="${i}">${d.slice(0,3)}</button>`;
@@ -927,7 +1360,7 @@ function renderWorkout(){
           ? ` · week ${ses.week} of ${ses.weeks} <button class="weekflip" data-act="week-flip">switch</button>`
           : ''}</p>
         <h2 class="sessname">${esc(ses.name)}</h2>
-        <p class="sessfocus">${esc(ses.focus)} · about ${ses.minutes} minutes · roughly ${fmt(sessionBurn(ses,w,1))} kcal</p>
+        <p class="sessfocus">${esc(ses.focus)} · about ${ses.minutes} minutes · roughly ${fmt(sessionBurn(ses,w,1))} kcal${ses.deload?'<span class="deloadtag">deload week</span>':''}</p>
       </div>
       ${isToday?`<div class="ring">
         <svg viewBox="0 0 80 80" width="80" height="80">
@@ -938,6 +1371,10 @@ function renderWorkout(){
       </div>`:''}
     </div>
     <p class="sessnote">${esc(ses.note)}</p>
+    ${isToday&&ses.exercises.length?`<div class="actions" style="margin-top:18px">
+      <button class="btn" data-act="player-open">${doneN?'Continue session':'Start session'}</button>
+      <span class="dim">Full screen, form photos, timers, screen stays awake.</span>
+    </div>`:''}
   </section>
 
   <div id="timerhost"></div>
@@ -985,6 +1422,7 @@ function renderWorkout(){
    ================================================================ */
 function renderLedger(){
   const p=S.profile, m=model(), fill=100-m.pct;
+  const adh=adherence();
   const t=S.entries[todayISO()]||{};
   return `
   <div class="daypick" style="justify-content:flex-end">
@@ -1009,9 +1447,12 @@ function renderLedger(){
       <dl class="facts">
         <div><dt>Burned so far</dt><dd>${fmt(m.cum)} kcal</dd></div>
         <div><dt>Still to go</dt><dd>${fmt(m.remaining)} kcal</dd></div>
-        <div><dt>Your pace</dt><dd>${fmt(m.pace)} <span class="dim">kcal / day</span></dd></div>
+        <div><dt>Sessions trained</dt><dd>${adh?`${adh.trained}<span class="dim"> of ${adh.planned}</span>`:'<span class="dim">none yet</span>'}</dd></div>
         <div><dt>Scale says</dt><dd>${m.scaleKg!=null?`${m.scaleKg.toFixed(2)} <span class="dim">kg</span>`:'<span class="dim">weigh in to see</span>'}</dd></div>
+        ${m.waist!=null?`<div><dt>Waist</dt><dd>${m.waist.toFixed(1)} <span class="dim">cm${m.waistChange!=null?`, ${m.waistChange>0?'+':''}${m.waistChange.toFixed(1)}`:''}</span></dd></div>`:''}
       </dl>
+      ${adh?`<p class="adh"><span class="adhbar"><span style="width:${adh.pct}%"></span></span>
+        You have trained on ${adh.trained} of the ${adh.planned} training days since you started. That number is entirely yours to control — the one above it is not.</p>`:''}
       <p class="eta">${m.eta
         ? `At this pace you hit ${p.goalWeight} kg around <b>${longDate(m.eta)}</b> — ${m.etaDays} days out.`
         : m.logged===0 ? 'Log your first day below and the projection starts.'
@@ -1033,6 +1474,7 @@ function renderLedger(){
     <div class="fields">
       <label><span>Date</span><input type="date" id="f-date" value="${todayISO()}"></label>
       <label><span>Weight (kg)</span><input type="number" step="0.1" inputmode="decimal" id="f-weight" placeholder="74.6" value="${t.weight??''}"></label>
+      <label><span>Waist (cm)</span><input type="number" step="0.1" inputmode="decimal" id="f-waist" placeholder="88.0" value="${t.waist??''}"></label>
       <label><span>Workout burned (kcal)</span><input type="number" inputmode="numeric" id="f-burn" placeholder="450" value="${t.burn||''}"></label>
       ${p.mode==='full'?`<label><span>Food eaten (kcal)</span><input type="number" inputmode="numeric" id="f-intake" placeholder="1900" value="${t.intake??''}"></label>`:''}
       <label class="wide"><span>Note</span><input type="text" id="f-note" placeholder="swim 40 min + dumbbells" value="${esc(t.note||'')}"></label>
@@ -1102,8 +1544,23 @@ function profileForm(p, forOnboarding){
 
   <p style="margin-top:22px; color:var(--slate); font-size:12.5px">Days you can train — the rest become recovery days</p>
   <div class="checks" id="p-days">
-    ${DAYNAMES.map((d,i)=>`<button type="button" data-act="trainday" data-i="${i}" class="${(p.trainingDays||[]).includes(i)?'on':''}">${d.slice(0,3)}</button>`).join('')}
+    ${DAYNAMES.map((d,i)=>`<button type="button" data-act="trainday" data-i="${i}" class="${(p.trainingDays||[]).includes(i)?'on':''}" aria-pressed="${(p.trainingDays||[]).includes(i)?'true':'false'}">${d.slice(0,3)}</button>`).join('')}
   </div>
+
+  ${forOnboarding?'':`
+  <p style="margin-top:22px; color:var(--slate); font-size:12.5px">Every fourth week</p>
+  <div class="checks">
+    <button type="button" data-act="toggle-deload" class="${p.deload!==false?'on':''}" aria-pressed="${p.deload!==false?'true':'false'}">
+      ${p.deload!==false?'✓ Deload weeks on':'Deload weeks off'}
+    </button>
+    <span class="dim" style="align-self:center">Volume drops 40% every fourth week. Recovery is when you actually adapt.</span>
+  </div>
+
+  <p style="margin-top:22px; color:var(--slate); font-size:12.5px">Appearance</p>
+  <div class="checks">
+    ${[['auto','Match my device'],['dark','Dark'],['light','Light']].map(([k,l])=>
+      `<button type="button" data-act="theme" data-k="${k}" class="${(p.theme||'auto')===k?'on':''}" aria-pressed="${(p.theme||'auto')===k?'true':'false'}">${l}</button>`).join('')}
+  </div>`}
 
   <div class="actions">
     <button class="btn" data-act="save-profile">${forOnboarding?'Build my plan':'Save changes'}</button>
@@ -1113,6 +1570,7 @@ function profileForm(p, forOnboarding){
 }
 
 let csvNote=null;
+let confirmWipe=false;
 
 function renderProfile(){
   const p=S.profile;
@@ -1134,8 +1592,26 @@ function renderProfile(){
     <p class="hint">The only columns that have to be filled are <b>day</b> and <b>exercise</b>. Leave a day out of the file and it becomes a recovery day. Use <b>seconds</b> for timed work like planks and treadmill blocks, or <b>reps</b> for counted sets — the timer follows whichever you fill in.</p>
 
     <hr class="rule" style="margin:30px 0 22px">
-    <p class="caption">Signed in as ${esc(ME.email)}. Maintenance currently estimated at ${fmt(p.maintenance)} kcal at ${p.startWeight} kg.</p>
-    <div class="actions"><button class="ghost" data-act="signout">Sign out</button></div>
+    <h2 style="font-size:17px; margin-bottom:8px">Account</h2>
+    <p class="caption" style="margin-top:0">Signed in as ${esc(ME.email)}. Maintenance currently estimated at ${fmt(p.maintenance)} kcal at ${p.startWeight} kg.</p>
+
+    <div class="fields" style="margin-top:18px">
+      <label><span>New password</span><input type="password" id="pw1" autocomplete="new-password" placeholder="At least 8 characters"></label>
+      <label><span>Repeat it</span><input type="password" id="pw2" autocomplete="new-password"></label>
+    </div>
+    <div class="actions">
+      <button class="ghost" data-act="change-password">Change password</button>
+      <span class="status"></span>
+    </div>
+
+    <div class="actions" style="margin-top:26px">
+      <button class="ghost" data-act="signout">Sign out</button>
+      ${confirmWipe
+        ? `<button class="ghost" style="border-color:#7A4030; color:#E08A6B" data-act="delete-data">Yes, delete everything</button>
+           <button class="ghost" data-act="cancel-delete">Keep it</button>
+           <span class="dim">Your weigh-ins, logs and plan. This cannot be undone.</span>`
+        : `<button class="ghost" data-act="ask-delete">Delete my data</button>`}
+    </div>
   </section>`;
 }
 
@@ -1162,18 +1638,16 @@ function renderMembers(){
       <div class="todaystat"><b>${membersCache.count}</b><span class="dim">with data saved</span></div>
     </div>
     ${ms.length?`<div class="scroll"><table>
-      <thead><tr><th>Name</th><th>Start</th><th>Now</th><th>Goal</th><th>Days logged</th><th>Banked</th><th>Last log</th></tr></thead>
+      <thead><tr><th scope="col">Name</th><th scope="col">Sessions trained</th><th scope="col">Days logged</th><th scope="col">Plan</th><th scope="col">Last log</th></tr></thead>
       <tbody>${ms.map(m=>`<tr>
         <td>${esc(m.name||m.email||'—')}</td>
-        <td>${m.startWeight??'—'}</td>
-        <td>${m.currentWeight??'—'}</td>
-        <td>${m.goalWeight??'—'}</td>
+        <td>${m.sessionsTrained??0}</td>
         <td>${m.daysLogged}</td>
-        <td class="dim">${fmt(m.bankedKcal)}</td>
+        <td class="dim">${esc(m.planSource||'—')}</td>
         <td class="dim">${m.lastLog?esc(shortDate(m.lastLog)):'—'}</td>
       </tr>`).join('')}</tbody></table></div>`
       :'<p class="caption">No member has saved anything yet.</p>'}
-    <p class="caption">This counts members who have used the app. Your full invite list lives in Netlify under Project configuration → Identity.</p>
+    <p class="caption">Attendance only. Weight, goal weight and waist never leave the member they belong to — not even to you. Your full invite list lives in Netlify under Project configuration → Identity.</p>
     <div class="actions"><button class="ghost" data-act="reload-members">Refresh</button></div>
   </section>`;
 }
@@ -1194,8 +1668,15 @@ function renderOnboard(){
    ================================================================ */
 let draft={equipment:[],trainingDays:[]};
 
+function applyTheme(){
+  const t=(S.profile && S.profile.theme) || 'auto';
+  if(t==='auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', t);
+}
+
 function render(){
   const p=S.profile;
+  applyTheme();
   if(!p){
     root.innerHTML=renderOnboard();
     return;
@@ -1230,6 +1711,81 @@ document.addEventListener('click', async (ev)=>{
   if(act==='panel'){ panel = panel===el.dataset.p ? null : el.dataset.p; render(); return; }
   if(act==='signout'){ window.netlifyIdentity.logout(); return; }
   if(act==='reload-members'){ membersCache=null; render(); return; }
+
+  if(act==='toggle-deload'){
+    S.profile.deload = S.profile.deload===false;
+    queueSave(); render(); return;
+  }
+  if(act==='theme'){
+    S.profile.theme = el.dataset.k;
+    applyTheme(); queueSave(); render(); return;
+  }
+
+  if(act==='change-password'){
+    const a=document.getElementById('pw1').value, b=document.getElementById('pw2').value;
+    if(a.length<8){ setStatus('Use at least 8 characters', true); return; }
+    if(a!==b){ setStatus("Those two don't match", true); return; }
+    const user=window.netlifyIdentity.currentUser();
+    if(!user){ setStatus('Sign in again first', true); return; }
+    setStatus('Changing…');
+    user.update({password:a})
+      .then(()=>{ document.getElementById('pw1').value=''; document.getElementById('pw2').value='';
+                  setStatus('Password changed'); })
+      .catch(err=>setStatus(err && err.message ? err.message : 'Could not change it', true));
+    return;
+  }
+
+  if(act==='ask-delete'){ confirmWipe=true; render(); return; }
+  if(act==='cancel-delete'){ confirmWipe=false; render(); return; }
+  if(act==='delete-data'){
+    confirmWipe=false;
+    setStatus('Deleting…');
+    try{
+      const res=await api('/api/data',{method:'DELETE'});
+      if(!res.ok) throw new Error('failed');
+      try{ localStorage.removeItem(lsKey()); }catch(e){}
+      S={profile:null, entries:{}, sessions:{}};
+      tab='workout'; render(); setStatus('Deleted');
+    }catch(e){ render(); setStatus('Delete failed, try again', true); }
+    return;
+  }
+
+  if(act==='player-open'){
+    const ses=buildSession(S.profile, viewDay);
+    openPlayer(firstUnfinished(ses, (S.sessions[todayISO()]?.done)||{}));
+    return;
+  }
+  if(act==='player-close'){ timer=null; clearInterval(tickHandle); closePlayer(); return; }
+  if(act==='player-prev'){ timer=null; clearInterval(tickHandle); player.ex=Math.max(0,player.ex-1); renderPlayer(); return; }
+  if(act==='player-next'){ timer=null; clearInterval(tickHandle); player.ex=player.ex+1; renderPlayer(); return; }
+  if(act==='player-done'){ closePlayer(); return; }
+
+  if(act==='player-go'){
+    const ses=buildSession(S.profile, viewDay);
+    const i=player.ex, ex=ses.exercises[i];
+    const done=(S.sessions[todayISO()]?.done)||{};
+    const s=nextSetIndex(ex,i,done);
+    if(s>=ex.sets) return;
+    if(ex.work){ beep(1,1100); startTimer({ex:i,set:s,mode:'work',endsAt:Date.now()+ex.work*1000,total:ex.work}); }
+    else{
+      markSet(i,s,true,true);
+      if(navigator.vibrate) navigator.vibrate(18);
+      if(ex.rest>0 && s<ex.sets-1) startTimer({ex:i,set:s,mode:'rest',endsAt:Date.now()+ex.rest*1000,total:ex.rest});
+      else if(ses.exercises[i+1] && s>=ex.sets-1) player.ex=i+1;
+    }
+    renderPlayer();
+    return;
+  }
+
+  if(act==='player-set'){
+    const ses=buildSession(S.profile, viewDay);
+    const i=player.ex, s=+el.dataset.set;
+    const done=(S.sessions[todayISO()]?.done)||{};
+    markSet(i,s,!done[`${i}-${s}`],true);
+    timer=null; clearInterval(tickHandle);
+    renderPlayer();
+    return;
+  }
 
   if(act==='zoom'){
     const folder=el.dataset.folder, name=el.dataset.name, enc=encodeURIComponent(folder);
@@ -1299,12 +1855,14 @@ document.addEventListener('click', async (ev)=>{
   if(act==='save-day'){
     const date=document.getElementById('f-date').value||todayISO();
     const wv=document.getElementById('f-weight').value;
+    const wa=document.getElementById('f-waist').value;
     const bv=document.getElementById('f-burn').value;
     const iv=document.getElementById('f-intake')?.value;
     const nv=document.getElementById('f-note').value;
-    if(wv===''&&bv===''&&(iv===undefined||iv==='')){ setStatus('Add a weight or a burn first',true); return; }
+    if(wv===''&&bv===''&&wa===''&&(iv===undefined||iv==='')){ setStatus('Add a weight or a burn first',true); return; }
     S.entries[date]={
       weight: wv===''?null:parseFloat(wv),
+      waist: wa===''?null:parseFloat(wa),
       burn: bv===''?0:parseFloat(bv),
       intake: (iv===undefined||iv==='')?null:parseFloat(iv),
       note: (nv||'').trim(),
@@ -1332,7 +1890,11 @@ document.addEventListener('click', async (ev)=>{
       dailyTarget:parseInt(document.getElementById('p-target').value)||500,
       mode:document.getElementById('p-mode').value,
       equipment, trainingDays,
+      startedOn: (S.profile && S.profile.startedOn) || todayISO(),
+      deload: S.profile ? S.profile.deload !== false : true,
+      customPlan: S.profile && S.profile.customPlan,
     };
+    if(!p.customPlan) delete p.customPlan;
     p.maintenance=maintenanceFor(p);
     S.profile=p; queueSave(); tab='workout'; viewDay=new Date().getDay(); render(); setStatus('Saved');
     return;
@@ -1340,6 +1902,11 @@ document.addEventListener('click', async (ev)=>{
 });
 
 document.addEventListener('change', async (ev)=>{
+  if(ev.target.classList && ev.target.classList.contains('plogin')){
+    const t=ev.target;
+    recordSet(todayISO(), t.dataset.name, +t.dataset.set, {[t.dataset.log]: t.value});
+    return;
+  }
   if(ev.target.id!=='csv-input') return;
   const file=ev.target.files && ev.target.files[0];
   ev.target.value='';
@@ -1374,6 +1941,27 @@ document.addEventListener('change', async (ev)=>{
    BOOT
    ================================================================ */
 document.getElementById('signin').addEventListener('click',()=>window.netlifyIdentity.open('login'));
+document.getElementById('forgot').addEventListener('click',()=>{
+  // The widget's own login pane carries the "Forgot password?" link that sends the email.
+  window.netlifyIdentity.open('login');
+});
+
+/* Netlify emails send people back here with a token in the URL fragment.
+   The widget reads it on init and shows the right form — but only if the
+   fragment survives, so open it explicitly rather than relying on timing. */
+function handleAuthLink(){
+  const hash=window.location.hash||'';
+  if(hash.indexOf('recovery_token=')>-1){ window.netlifyIdentity.open('login'); return true; }
+  if(hash.indexOf('invite_token=')>-1){ window.netlifyIdentity.open('signup'); return true; }
+  if(hash.indexOf('confirmation_token=')>-1){ window.netlifyIdentity.open('login'); return true; }
+  if(hash.indexOf('error=')>-1){
+    // an expired or already-used link
+    const note=document.querySelector('.gate-note');
+    if(note) note.textContent='That link has expired or was already used. Ask for a new one with "Forgot your password?" above.';
+    return true;
+  }
+  return false;
+}
 
 async function boot(){
   const user=window.netlifyIdentity.currentUser();
@@ -1413,7 +2001,7 @@ async function boot(){
   if(!fromServer) setStatus('Offline — showing your last saved copy', true);
 }
 
-window.netlifyIdentity.on('init', ()=>boot());
+window.netlifyIdentity.on('init', ()=>{ handleAuthLink(); boot(); });
 window.netlifyIdentity.on('login', ()=>{ window.netlifyIdentity.close(); boot(); });
 window.netlifyIdentity.on('logout', ()=>{ S={profile:null,entries:{},sessions:{}}; location.reload(); });
 window.netlifyIdentity.init();
