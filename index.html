@@ -108,6 +108,25 @@ input:focus-visible,select:focus-visible,.tabs button:focus-visible{outline:2px 
 /* ---------- exercises ---------- */
 .phase{padding:22px 0 6px}
 .phasename{font-size:13px; color:var(--slate); font-weight:500; margin-bottom:12px}
+.exshot{position:relative; flex:0 0 auto; width:96px; height:72px; padding:0; border:1px solid var(--line);
+  border-radius:8px; overflow:hidden; background:var(--deep); cursor:zoom-in}
+.exshot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block}
+.exshot img.b{opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .exshot img.b{animation:exflip 2.8s ease-in-out infinite}
+}
+@keyframes exflip{0%,38%{opacity:0}52%,88%{opacity:1}100%{opacity:0}}
+
+.lightbox{position:fixed; inset:0; z-index:60; background:rgba(8,11,15,.92);
+  display:flex; align-items:center; justify-content:center; padding:24px; cursor:zoom-out}
+.lbinner{max-width:900px; width:100%; text-align:center}
+.lbinner h4{font-size:19px; font-weight:600; margin-bottom:16px}
+.lbshots{display:flex; gap:16px; justify-content:center; flex-wrap:wrap}
+.lbshots figure{margin:0; flex:1 1 300px; max-width:420px}
+.lbshots img{width:100%; height:auto; border-radius:10px; border:1px solid var(--line); display:block}
+.lbshots figcaption{color:var(--slate); font-size:12.5px; margin-top:8px}
+.lbinner .ghost{margin-top:20px}
+
 .ex{padding:15px 0; border-top:1px solid #1C232C; display:flex; justify-content:space-between;
   align-items:flex-start; gap:18px}
 .exmain{min-width:0}
@@ -204,7 +223,9 @@ footer{color:#5D6875; font-size:12.5px; padding-top:22px; max-width:76ch}
   .readout{width:100%}
   .big{font-size:50px}
   .sessname{font-size:25px}
-  .ex{flex-direction:column; gap:12px}
+  .ex{flex-direction:row; flex-wrap:wrap; gap:12px}
+  .exmain{flex:1 1 60%; min-width:0}
+  .exshot{width:78px; height:60px}
   .sets{max-width:none; justify-content:flex-start}
   .timerbar{grid-template-columns:1fr auto}
   .timernum{font-size:36px}
@@ -407,6 +428,40 @@ const daysBetween=(a,b)=>Math.round((parseISO(b)-parseISO(a))/86400000);
 const fmt=n=>Math.round(n||0).toLocaleString('en-IN');
 const clock=s=>{const t=Math.max(0,Math.ceil(s));return `${Math.floor(t/60)}:${pad(t%60)}`};
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+/* ---------------- exercise photos ---------------- */
+/* Two frames per exercise — start and end position — served from jsDelivr,
+   which is built for exactly this. Nothing to host. If the lookup file or an
+   image fails to load, the app carries on without pictures. */
+const IMG_CDN='https://cdn.jsdelivr.net/gh/yuhonas/free-exercise-db@main/exercises/';
+let IMG_MAP=null;
+
+const normName=s=>String(s||'').toLowerCase().replace(/-/g,' ')
+  .replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(Boolean).join(' ');
+
+/* Only strip words that describe how it's loaded or counted, never the movement. */
+const TRIM=[/ without weight$/,/ to failure$/,/ each leg$/,/ each side$/,/^alternating /,/^bodyweight /];
+
+function exerciseShot(name){
+  if(!IMG_MAP) return null;
+  let q=normName(name);
+  if(IMG_MAP[q]) return IMG_MAP[q];
+  for(const re of TRIM){
+    const t=q.replace(re,'').trim();
+    if(t && t!==q && IMG_MAP[t]) return IMG_MAP[t];
+  }
+  return null;
+}
+
+function shotHtml(name){
+  const folder=exerciseShot(name);
+  if(!folder) return '';
+  const enc=encodeURIComponent(folder);
+  return `<button class="exshot" data-act="zoom" data-folder="${esc(folder)}" data-name="${esc(name)}" aria-label="Show ${esc(name)}">
+    <img src="${IMG_CDN}${enc}/0.jpg" alt="" loading="lazy" onerror="this.parentNode.style.display='none'">
+    <img class="b" src="${IMG_CDN}${enc}/1.jpg" alt="" loading="lazy" onerror="this.style.display='none'">
+  </button>`;
+}
 
 /* ---------------- plan generation ---------------- */
 function kitOf(profile){ return ['bodyweight',...(profile.equipment||[])]; }
@@ -890,6 +945,7 @@ function renderWorkout(){
   ${phases.map(ph=>`<section class="phase">
     <h3 class="phasename">${esc(ph.n)}</h3>
     ${ph.items.map(ex=>`<article class="ex">
+      ${shotHtml(ex.name)}
       <div class="exmain">
         <h4>${esc(ex.name)}</h4>
         <p class="exmeta">${esc(ex.detail)}${ex.rest?` · ${ex.rest}s rest`:''}</p>
@@ -1175,6 +1231,24 @@ document.addEventListener('click', async (ev)=>{
   if(act==='signout'){ window.netlifyIdentity.logout(); return; }
   if(act==='reload-members'){ membersCache=null; render(); return; }
 
+  if(act==='zoom'){
+    const folder=el.dataset.folder, name=el.dataset.name, enc=encodeURIComponent(folder);
+    const box=document.createElement('div');
+    box.className='lightbox';
+    box.innerHTML=`<div class="lbinner">
+      <h4>${esc(name)}</h4>
+      <div class="lbshots">
+        <figure><img src="${IMG_CDN}${enc}/0.jpg" alt="${esc(name)}, start position"><figcaption>Start</figcaption></figure>
+        <figure><img src="${IMG_CDN}${enc}/1.jpg" alt="${esc(name)}, end position"><figcaption>End</figcaption></figure>
+      </div>
+      <button class="ghost">Close</button>
+    </div>`;
+    const shut=()=>box.remove();
+    box.addEventListener('click',shut);
+    document.body.appendChild(box);
+    return;
+  }
+
   if(act==='week-flip'){
     const cp=S.profile.customPlan;
     if(cp){ cp.weekOffset=(cp.weekOffset||0)+1; queueSave(); timer=null; clearInterval(tickHandle); render(); }
@@ -1308,6 +1382,14 @@ async function boot(){
   ME.isAdmin=Array.isArray(user.app_metadata?.roles)&&user.app_metadata.roles.includes('admin');
   gate.classList.add('hidden'); root.classList.remove('hidden');
   root.innerHTML='<p class="caption" style="padding:40px 0">Opening your plan…</p>';
+
+  // Exercise photos are a nice-to-have: if this fails, the app runs without them.
+  if(!IMG_MAP){
+    try{
+      const r=await fetch('/exercise-images.json');
+      if(r.ok) IMG_MAP=await r.json();
+    }catch(e){ IMG_MAP=null; }
+  }
 
   let fromServer = false;
   try{
